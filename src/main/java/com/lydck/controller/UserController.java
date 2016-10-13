@@ -1,0 +1,16 @@
+package com.lydck.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/user")
+public class UserController {
+	
+	//返回一个ModelAndView对象
+	@RequestMapping("/register")
+	public String register() {
+		System.out.println("register");
+		return "user/register";
+	}
+}
