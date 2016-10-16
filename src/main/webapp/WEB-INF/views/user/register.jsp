@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
-
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>用户注册</title>
 </head>
 <body>
-	<form action="/user.html" method="post">
+	<form action='createUser.html' method="post" name="user">
 		<table>
 			<tr>
 				<td>用户名：</td>
@@ -26,8 +25,12 @@
 			</tr>
 			<tr>
 				<td>性别：</td>
-				<td><input type="radio" name="gender" value="男" checked="true"><label for="男">男</label></td>
-				<td><input type="radio" name="gender" value="女"><label for="女">女</label></td>
+				<td><input type="radio" name="gender" value="MALE" checked="true"><label for="男">男</label></td>
+				<td><input type="radio" name="gender" value="FEMALE"><label for="女">女</label></td>
+			</tr>
+			<tr>
+				<td>提交</td>
+				<td><input type="submit"></td>
 			</tr>
 		</table>
 	</form>
