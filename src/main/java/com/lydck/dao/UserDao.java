@@ -4,14 +4,14 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lydck.domain.User;
+import com.lydck.entity.TUser;
 
 @Service
 public class UserDao {
 	@Autowired
 	private SqlSessionTemplate batisTemplate;
 	
-	public User getUser(User user) {
+	public TUser getUser(TUser user) {
 		return batisTemplate.selectOne(this.getClass().getName() + ".getUser", user);
 	}
 }
