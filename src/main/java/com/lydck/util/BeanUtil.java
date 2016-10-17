@@ -31,6 +31,9 @@ public class BeanUtil {
 		user.setEmail("132jldkjfo");
 		user.setLastLoginTime(new Date());
 		TUser tuser = new TUser();
+		/*tuser.setGender(1);
+		tuser.setEmail("34sdfe");
+		tuser.setLastLoginTime(new Date());*/
 		copyBean(user, tuser);
 		System.out.println(tuser);
 	}
@@ -49,14 +52,15 @@ class EnumConvert implements Converter {
 				e.printStackTrace();
 			}
 		}
-		if(value instanceof Enum && Enum.class.isAssignableFrom(target)) {
+		//转换为枚举类型的属性
+		if(Enum.class.isAssignableFrom(target)) {
 			try {
-				Method method = target.getDeclaredMethod("getEnum", String.class);
-				return method.invoke(null, value.toString());
+				Method method = target.getDeclaredMethod("getEnum", Integer.class);
+				return method.invoke(null, value);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			return value.toString();
+			return value;
 		}
 		return value;
 	}

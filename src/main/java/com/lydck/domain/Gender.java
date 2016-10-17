@@ -38,4 +38,13 @@ public enum Gender {
 		}
 		return null;
 	}
+	public static Gender getEnum(Integer gender) {
+		if(gender == Gender.MALE.gender) {
+			return Gender.MALE;
+		}
+		if(gender == Gender.FEMALE.gender) {
+			return Gender.FEMALE;
+		}
+		return null;
+	}
 }
