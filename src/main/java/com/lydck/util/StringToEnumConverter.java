@@ -10,7 +10,7 @@ public class StringToEnumConverter implements Converter<String, Gender> {
 	public Gender convert(String source) {
 		if (source == null)
 			return null;
-		return Gender.genGender(source);
+		return Gender.getEnum(source);
 	}
 	
 	public static void main(String[] args) {

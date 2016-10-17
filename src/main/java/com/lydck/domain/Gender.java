@@ -7,7 +7,7 @@ package com.lydck.domain;
  *
  */
 public enum Gender {
-	MALE(0, "男"), FEMALE(1, "女");
+	MALE(0, "MALE"), FEMALE(1, "FEMALE");
 
 	private int gender;
 	private String describe;
@@ -25,12 +25,17 @@ public enum Gender {
 		return describe;
 	}
 
-	public static Gender genGender(String describe) {
-		Gender result = null;
-		if (describe.equals(MALE.toString())) {
-			result = MALE;
-		} else if(describe.equals(FEMALE.toString()))
-			result = FEMALE;
-		return result;
+	public static int getGender(Gender describe) {
+		return describe.gender;
+	}
+
+	public static Gender getEnum(String source) {
+		if(source.equals(MALE.describe)) {
+			return Gender.MALE;
+		}
+		if(source.equals(FEMALE.describe)) {
+			return Gender.FEMALE;
+		}
+		return null;
 	}
 }
