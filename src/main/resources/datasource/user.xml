@@ -8,6 +8,9 @@
 		FROM
 			USER
 		WHERE 1 = 1
+			<if test="id != null">
+    			AND id = #{id}
+  			</if>
   			<if test="username != null and username != ''">
   				AND username = #{username}
   			</if>
@@ -30,4 +33,16 @@
   				AND last_login_time = #{lastLoginTime}
   			</if>
 	</select>
+	<insert id="createUser" parameterType="User">
+		INSERT INTO `user` (
+			username,
+			PASSWORD,
+			gender,
+			mobile,
+			email,
+			score,
+			last_login_time
+		)
+		VALUES(	#{username}, #{password}, #{gender}, #{mobile}, #{email}, #{score}, #{lastLoginTime} )
+	</insert>
 </mapper>

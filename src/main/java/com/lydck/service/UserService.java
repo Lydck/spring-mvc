@@ -22,19 +22,22 @@ public class UserService {
 	public User getUser(User user) {
 		logger.info("查询用户信息，入参：" + user);
 		String validate = ValidateUtil.validate(user);
-		TUser tuser = new TUser();
-		BeanUtil.copyBean(user, tuser);
 		if(validate != null) {
 			logger.error(validate);
 			throw new RuntimeException(validate);
 		}
-		TUser entity = userDao.getUser(tuser);
-		logger.info("查询user结果：" + entity);
-		if(entity == null) {
-			return null;
+		return userDao.getUser(user);
+	}
+	public boolean createUser(User user) throws UserException{
+		logger.info("创建用户，入参：" + user);
+		String validate = ValidateUtil.validate(user);
+		if(validate != null) {
+			logger.error(validate);
+			throw new UserException(ErrorCode.E0001);
 		}
-		BeanUtil.copyBean(entity, user);
-		return user;
+		TUser tuser = new TUser();
+		BeanUtil.copyBean(user, tuser);
+		return userDao.createUser(tuser);
 	}
 	
 }

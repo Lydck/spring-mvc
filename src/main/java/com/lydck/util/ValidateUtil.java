@@ -41,7 +41,7 @@ public class ValidateUtil {
 		if (paramAnno == null) {
 			return null;
 		}
-		// 获取field的字面值
+		// 获取field属性值的字面值
 		String value = null;
 		try {
 			value = field.get(param) == null ? null : field.get(param).toString();
@@ -55,7 +55,7 @@ public class ValidateUtil {
 		String fieldName = field.getName();
 		/* 参数解析工作开始 */
 		if (!paramAnno.nullable()) {// 属性不允许为空
-			if (value == null || value.equals("")) {
+			if (value == null || value.trim().length() == 0) {
 				return field.getName() + description;
 			}
 		}
