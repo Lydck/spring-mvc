@@ -33,7 +33,7 @@ public class UserService {
 		String validate = ValidateUtil.validate(user);
 		if(validate != null) {
 			logger.error(validate);
-			throw new UserException(ErrorCode.E0001);
+			throw new UserException(ErrorCode.E0001.getCode(), validate);
 		}
 		TUser tuser = new TUser();
 		BeanUtil.copyBean(user, tuser);

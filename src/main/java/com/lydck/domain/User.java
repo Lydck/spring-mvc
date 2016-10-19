@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.lydck.util.ParamValiAnno;
+import com.lydck.util.RegexType;
 
 public class User implements Serializable {
 
@@ -19,6 +20,7 @@ public class User implements Serializable {
 	private String password;
 	private Gender gender;
 	private String mobile;
+	@ParamValiAnno(regexType = RegexType.EMAIL, description = "邮箱格式")
 	private String email;
 	private int score;
 	private Date lastLoginTime;
