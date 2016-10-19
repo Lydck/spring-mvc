@@ -44,6 +44,10 @@ class EnumConvert implements Converter {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public Object convert(Object value, Class target, Object context) {
+		//枚举值之间的转换之间返回
+		if(value instanceof Enum && Enum.class.isAssignableFrom(target)) {
+			return value;
+		}
 		if (value instanceof Gender) {//性别转换，目标对象的属性不是Gender
 			try {
 				Method memthod = Gender.class.getDeclaredMethod("getGender", Gender.class);
