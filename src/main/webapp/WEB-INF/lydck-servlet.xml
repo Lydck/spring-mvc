@@ -2,8 +2,37 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-	   	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+	   	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+	   	http://www.springframework.org/schema/util 
+	   	http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+<!-- HttpMessageConvert 请求、响应数据格式转换器 -->
+<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"
+	p:messageConverters-ref="messageConverters"/>
+<util:list id="messageConverters">
+	<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+	<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+	<bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>
+	<bean class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter"/>
+	<bean class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter"
+		p:marshaller-ref="xmlMarshaller"
+		p:unmarshaller-ref="xmlMarshaller"/>
+	<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+</util:list>
+<!-- 使用Xstream提供xml解析器 -->
+<bean id="xmlMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller"
+	p:streamDriver-ref="staxDriver"
+	p:annotatedClasses-ref="annotatedClasses"
+	p:aliases-ref="aliases"/>
+<bean id="staxDriver" class="com.thoughtworks.xstream.io.xml.StaxDriver"/>
+<util:map id="aliases" map-class="java.util.HashMap">  
+	<entry key="user" value="com.lydck.domain.User"/>  
+</util:map>
+<util:list id="annotatedClasses">
+	<value>com.lydck.domain.User</value>
+</util:list>
 
 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 	p:prefix="/WEB-INF/views/"

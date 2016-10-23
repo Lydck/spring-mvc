@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
 import com.lydck.domain.ParamA;
+import com.lydck.domain.User;
 
 @Controller
 public class RequestController {
@@ -74,5 +75,11 @@ public class RequestController {
 		MediaType contentType = httpEntity.getHeaders().getContentType();
 		logger.info(contentLength + "");
 		logger.info(contentType.toString());
+	}
+	@RequestMapping("handle51")
+	public ResponseEntity<User> handle51(HttpEntity<User> requestEntity) {
+		User user = requestEntity.getBody();
+		user.setId(100);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 }

@@ -1,13 +1,21 @@
 package com.lydck.controller;
 
 import java.io.IOException;
+import java.util.Collections;
 
 import org.junit.Test;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
+import com.lydck.domain.User;
 
 public class RequestControllerTest {
 	
@@ -18,7 +26,7 @@ public class RequestControllerTest {
 		form.add("username", "Tom");
 		form.add("password", "123456");
 		form.add("age", "25");
-		restTemplate.postForLocation("http://localhost:8080/spring-mvc/handle41", form);
+		restTemplate.postForLocation("http://localhost:8081/spring-mvc/handle41", form);
 	}
 	@Test
 	public void handle42() throws IOException {
@@ -30,6 +38,22 @@ public class RequestControllerTest {
 	@Test
 	public void handle43() {
 		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.postForLocation("http://localhost:8080/spring-mvc/handle43", null);
+		restTemplate.postForLocation("http://localhost:8081/spring-mvc/handle43", null);
+	}
+	@Test
+	public void handle51() {
+		RestTemplate restTemplate = new RestTemplate();
+		User user = new User();
+		user.setUsername("xiangyajun");
+		user.setPassword("123456");
+		user.setMobile("186015882474");
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.valueOf("application/xml;UTF-8"));
+		httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_XML));
+		HttpEntity<User> httpEntity = new HttpEntity<User>(user, httpHeaders);
+		ResponseEntity<User> exchange = restTemplate.exchange("http://localhost:8081/spring-mvc/handle51", HttpMethod.POST, httpEntity, User.class);
+		User body = exchange.getBody();
+		System.out.println(body.getId());
+		System.out.println(body.getUsername());
 	}
 }
