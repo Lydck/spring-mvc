@@ -11,8 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -81,5 +83,22 @@ public class RequestController {
 		User user = requestEntity.getBody();
 		user.setId(100);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
+	}
+	@RequestMapping("handle61")
+	public String handle61(@ModelAttribute("user")User user) {
+		user.setId(110);
+		return "user/createSuccess";
+	}
+	@RequestMapping("handle63")
+	public String handle63(ModelMap modelMap) {
+		modelMap.addAttribute("testAttr", "value1");
+		User user = (User)modelMap.get("user");
+		user.setScore(99);
+		return "user/createSuccess";
+	}
+	@RequestMapping("handle81")
+	public String handle81(@RequestParam("user")User user, ModelMap modelMap) {
+		modelMap.put("user", user);
+		return "user/createSeuccess";
 	}
 }

@@ -11,11 +11,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
+import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.lydck.domain.User;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 public class RequestControllerTest {
 	
@@ -40,6 +43,9 @@ public class RequestControllerTest {
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.postForLocation("http://localhost:8081/spring-mvc/handle43", null);
 	}
+	/**
+	 * servlet端配置的xml转换器会将请求中的对象流化为xml格式
+	 */
 	@Test
 	public void handle51() {
 		RestTemplate restTemplate = new RestTemplate();
@@ -48,12 +54,42 @@ public class RequestControllerTest {
 		user.setPassword("123456");
 		user.setMobile("186015882474");
 		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.valueOf("application/xml;UTF-8"));
-		httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_XML));
+		//httpHeaders.setContentType(MediaType.valueOf("application/xml;UTF-8"));
+		//httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_XML));//返回响应报文为Xml
+		httpHeaders.setContentType(MediaType.valueOf("application/json;UTF-8"));
+		httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));//返回响应报文为Json
 		HttpEntity<User> httpEntity = new HttpEntity<User>(user, httpHeaders);
 		ResponseEntity<User> exchange = restTemplate.exchange("http://localhost:8081/spring-mvc/handle51", HttpMethod.POST, httpEntity, User.class);
 		User body = exchange.getBody();
 		System.out.println(body.getId());
 		System.out.println(body.getUsername());
+	}
+	@Test
+	public void buildXMLRequest() {
+		XStreamMarshaller xmlMarshaller = new XStreamMarshaller();
+		xmlMarshaller.setStreamDriver(new StaxDriver());
+		xmlMarshaller.setAnnotatedClasses(User.class);
+		MarshallingHttpMessageConverter xmlConvert = new MarshallingHttpMessageConverter();
+		xmlConvert.setMarshaller(xmlMarshaller);
+		xmlConvert.setUnmarshaller(xmlMarshaller);
+	}
+	@Test
+	public void handle61() {
+		RestTemplate restTemplate = new RestTemplate();
+		LinkedMultiValueMap<String, String> form = new LinkedMultiValueMap<String, String>();
+		form.add("username", "Tom");
+		form.add("password", "123456");
+		form.add("age", "25");
+		restTemplate.postForLocation("http://localhost:8081/spring-mvc/handle61", form);
+	}
+	
+	@Test
+	public void handle63() {
+		RestTemplate restTemplate = new RestTemplate();
+		LinkedMultiValueMap<String, String> form = new LinkedMultiValueMap<String, String>();
+		form.add("username", "Tom");
+		form.add("password", "123456");
+		form.add("age", "25");
+		restTemplate.postForLocation("http://localhost:8081/spring-mvc/handle63", form);
 	}
 }

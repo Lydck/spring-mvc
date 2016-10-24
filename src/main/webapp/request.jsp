@@ -18,6 +18,15 @@
 		<input type="text" name="username">
 		<input type="submit" value="提交">
 	</form>
-	
+	<label>handle61</label>
+	<form action="handle61">
+		<input type="text" name="username">
+		<input type="submit" value="提交">
+	</form>
+	<label>handle63</label>
+	<form action="handle63">
+		<input type="text" name="user">
+		<input type="submit" value="提交">
+	</form>
 </body>
 </html>
