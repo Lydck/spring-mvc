@@ -1,9 +1,11 @@
 package com.lydck.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
@@ -24,11 +26,15 @@ import org.springframework.web.context.request.WebRequest;
 
 import com.lydck.domain.ParamA;
 import com.lydck.domain.User;
+import com.lydck.service.UserService;
 
 @Controller
 public class RequestController {
 	
 	private static Logger logger = LoggerFactory.getLogger(RequestController.class);
+	
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value = "handle12",method=RequestMethod.POST)
 	public void handle12(@CookieValue(value="sessionId", required = false)String sessionId,
@@ -100,5 +106,11 @@ public class RequestController {
 	public String handle81(@RequestParam("user")User user, ModelMap modelMap) {
 		modelMap.put("user", user);
 		return "user/createSeuccess";
+	}
+	@RequestMapping("showUserList")
+	public String showUserList(ModelMap mm) {
+		List<User> users = userService.getUsers(null);
+		mm.addAttribute("userList", users);
+		return "user/userList";
 	}
 }

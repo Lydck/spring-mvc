@@ -1,5 +1,7 @@
 package com.lydck.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class UserService {
 			throw new RuntimeException(validate);
 		}
 		return userDao.getUser(user);
+	}
+	public List<User> getUsers(User user) {
+		return userDao.getUsers(user);
 	}
 	public boolean createUser(User user) throws UserException{
 		logger.info("创建用户，入参：" + user);

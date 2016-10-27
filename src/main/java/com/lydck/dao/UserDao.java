@@ -1,5 +1,7 @@
 package com.lydck.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,5 +21,8 @@ public class UserDao {
 	public boolean createUser(TUser user) {
 		int insert = batisTemplate.insert(this.getClass().getName() + ".createUser", user);
 		return insert == 1;
+	}
+	public List<User> getUsers(User user) {
+		return batisTemplate.selectList(this.getClass().getName() + ".getUser", user);
 	}
 }
