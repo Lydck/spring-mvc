@@ -8,8 +8,6 @@
 	<table>
 		<tr>
 			<td>${userList }</td>
-			<td>${user.mobile }</td>
-			<td>${user.gender }</td>
 		</tr>
 	</table>
 </body>

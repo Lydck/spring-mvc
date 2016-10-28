@@ -1,5 +1,6 @@
 package com.lydck.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -31,7 +32,23 @@ public class UserService {
 		return userDao.getUser(user);
 	}
 	public List<User> getUsers(User user) {
-		return userDao.getUsers(user);
+		logger.info("查询用户列表，入参：" + user);
+		TUser param = null;
+		if(user != null) {
+			param = new TUser();
+			BeanUtil.copyBean(user, param);
+		}
+		List<TUser> users = userDao.getUsers(param);
+		List<User> result = null;
+		if(!users.isEmpty()) {
+			result = new ArrayList<User>();
+			for (TUser tuser : users) {
+				User target = new User();
+				BeanUtil.copyBean(tuser, target);
+				result.add(target);
+			}
+		}
+		return result;
 	}
 	public boolean createUser(User user) throws UserException{
 		logger.info("创建用户，入参：" + user);
