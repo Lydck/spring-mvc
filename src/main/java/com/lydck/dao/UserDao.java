@@ -22,7 +22,7 @@ public class UserDao {
 		int insert = batisTemplate.insert(this.getClass().getName() + ".createUser", user);
 		return insert == 1;
 	}
-	public List<User> getUsers(User user) {
+	public List<TUser> getUsers(TUser user) {
 		return batisTemplate.selectList(this.getClass().getName() + ".getUser", user);
 	}
 }

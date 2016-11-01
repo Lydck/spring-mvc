@@ -16,6 +16,9 @@ public class BeanUtil {
 	private static final EnumConvert conveter = new EnumConvert();
 
 	public static void copyBean(Object source, Object target) {
+		if(source == null || target == null) {
+			return;
+		}
 		String key = source.getClass().getName() + target.getClass().getName();
 		BeanCopier copyer = copier.get(key);
 		if (copyer == null) {
